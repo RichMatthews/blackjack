@@ -9,10 +9,12 @@ require('isomorphic-fetch');
 
 class ReactApp extends React.Component{
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.props.Deck.shuffle();
     this.state = {
-      capturedDeck: this.shuffleDeck(),
+      deck: this.props.Deck,
+      capturedDeck: this.props.Deck.cards,
       playersOverallTotal: 0,
       dealersOverallTotal: 0,
       playersDeck: [],
@@ -26,51 +28,10 @@ class ReactApp extends React.Component{
     this.handleStakeChange = this.handleStakeChange.bind(this);
   }
 
-  buildDeck = () => {
-    let suit = ['C', 'D', 'H', 'S'];
-    let rank = {
-      'A': 1,
-      '2': 2,
-      '3': 3,
-      '4': 4,
-      '5': 5,
-      '6': 6,
-      '7': 7,
-      '8': 8,
-      '9': 9,
-      '10': 10,
-      'J': 10,
-      'Q': 10,
-      'K': 10
-    };
-    let deck = [];
-    Object.keys(rank).forEach(function(key) {
-        for (var k=0; k < suit.length; k++){
-          deck.push({ rankKey: key, rankValue: rank[key], suit: suit[k]})
-        }
-    });
-    return deck;
-  }
-
-  // componentDidMount = () => {
-  //   this.dealToPlayer();
-  //   this.dealToPlayer();
-  //   this.dealToDealer();
-  //   this.dealToDealer();
-  // }
-
-  shuffleDeck = () => {
-    return _.shuffle(this.buildDeck());
-  }
-
-  removeCardsFromDeck = () => {
-    this.state.capturedDeck.shift();
-  }
 
   dealToPlayer = () => {
     this.forceUpdate();
-    this.state.playersDeck.push(this.state.capturedDeck[0]);
-    this.removeCardsFromDeck();
+    this.state.playersDeck.push(this.state.deck.take());
     let playersDeck = this.state.playersDeck;
     let playersDeckTotal = [];
     for (var i=0; i < playersDeck.length; i++){
@@ -86,8 +47,7 @@ class ReactApp extends React.Component{
 
   dealToDealer = () => {
     this.forceUpdate();
-    this.state.dealersDeck.push(this.state.capturedDeck[0]);
-    this.removeCardsFromDeck();
+    this.state.dealersDeck.push(this.state.deck.take());
     let dealersDeck = this.state.dealersDeck;
     let dealersDeckTotal = [];
     for (var i=0; i < dealersDeck.length; i++){
@@ -285,18 +245,7 @@ class ReactApp extends React.Component{
   )
  }
 };
-const deck = new cardDeck(4)
 
-cardDeck = {
-  buildDeck: fucntion,
-  shuffle: functiocn,
-  tackOne: function,
-  cards: [
-    {suit: 'D',
-     rank: A,
-   value: [1,11]}
-  ]
-}
   ReactDOM.render(
-    <ReactApp {dealer = dealer} players = players deck = deck/>, document.getElementById('content')
+    <ReactApp Deck={new Deck()}/>, document.getElementById('content')
   );

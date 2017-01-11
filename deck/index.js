@@ -1,26 +1,15 @@
-import React from 'react';
 import _ from 'underscore';
-import './index.scss';
-require('es6-promise').polyfill();
 
-export default class Deck extends React.Component{
+export default class Deck {
 
-  constructor() {
-    super();
-    this.state = {
-      capturedDeck: this.shuffleDeck(),
-      playersDeck: [],
-      dealersDeck: []
-    }
+  constructor(){
+    this.cards = this.buildDeck();
   }
 
   buildDeck = () => {
     let suit = ['C', 'D', 'H', 'S'];
     let rank = {
-      'A': {
-        aceOne: 1,
-        aceEleven: 11
-      },
+      'A': 1,
       '2': 2,
       '3': 3,
       '4': 4,
@@ -43,16 +32,11 @@ export default class Deck extends React.Component{
     return deck;
   }
 
-  shuffleDeck = () => {
-    return _.shuffle(this.buildDeck());
+  shuffle = () => {
+    this.cards = _.shuffle(this.cards);
   }
 
-  removeCardsFromDeck = () => {
-    this.state.capturedDeck.shift();
+  take = () => {
+    return this.cards.shift();
   }
-
-  render(){
-    return (
-  )
- }
 };
