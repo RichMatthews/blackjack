@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import Deck from '../deck/index';
 import _ from 'underscore';
 import './index.scss';
 require('es6-promise').polyfill();
@@ -284,7 +285,18 @@ class ReactApp extends React.Component{
   )
  }
 };
+const deck = new cardDeck(4)
 
+cardDeck = {
+  buildDeck: fucntion,
+  shuffle: functiocn,
+  tackOne: function,
+  cards: [
+    {suit: 'D',
+     rank: A,
+   value: [1,11]}
+  ]
+}
   ReactDOM.render(
-    <ReactApp />, document.getElementById('content')
+    <ReactApp {dealer = dealer} players = players deck = deck/>, document.getElementById('content')
   );
