@@ -1,7 +1,19 @@
 export default class Participants {
 
   constructor(){
-    this.score = score;
+    this.hand = [];
+  }
+
+  addToHand(card) {
+    this.hand.push(card);
+  }
+
+  handTotal() {
+    let total = 0;
+    for (var i=0; i < this.hand.length; i++){
+      total += this.hand[i].rankValue;
+    }
+    return total;
   }
 
 };
