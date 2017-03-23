@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Deck from '../deck/index';
-import Player from '../player/index';
-import Dealer from '../dealer/index';
+import Player from '../participants/index';
+import Dealer from '../participants/index';
 import _ from 'underscore';
 import './index.scss';
 require('es6-promise').polyfill();
@@ -26,9 +26,6 @@ class Blackjack extends React.Component{
 
   dealToPlayer = () => {
     this.state.player.addToHand(this.state.deck.take());
-    // console.log(this.state.player.handTotal(), 'before');
-    this.doesHandHaveAce();
-    // console.log(this.state.player.handTotal(), 'after');
     this.forceUpdate();
   }
 
@@ -38,7 +35,6 @@ class Blackjack extends React.Component{
   }
 
   doesHandHaveAce = () => {
-    //console.log(this.state.player.handTotal(), 'totes ');
     this.state.player.hand.forEach(function(card){
       if (card.rankKey == 'A' && this.state.player.handTotal() > 11){
         this.state.player.handTotal() - 10;
@@ -116,10 +112,10 @@ class Blackjack extends React.Component{
             <div>
               {this.state.player.hand.map(function(card, index){
                   if (card.suit == 'D' || card.suit == 'H'){
-                    return <div className="cardFormatDH" key={ index }> {card.rankKey}{card.suit} </div>;
+                    return <div className="cardFormatDH" key={ index }> {card.rank}{card.suit} </div>;
                   }
                   else if (card.suit == 'C' || card.suit == 'S'){
-                    return <div className="cardFormatCS" key={ index }> {card.rankKey}{card.suit} </div>;
+                    return <div className="cardFormatCS" key={ index }> {card.rank}{card.suit} </div>;
                   }
               }, this)}
               <span id="scores"> {this.state.player.handTotal()} </span>
@@ -131,7 +127,7 @@ class Blackjack extends React.Component{
               {this.state.dealer.hand.map(function(card, index){
                 if (index == 1){
                   if (this.state.revealCards === true){
-                    return <div className="cardFormatDH" key={ index }> {card.rankKey}{card.suit} </div>;
+                    return <div className="cardFormatDH" key={ index }> {card.rank}{card.suit} </div>;
                     <span id="scores"> {this.state.dealer.handTotal()} </span>
                   }
                   else {
@@ -140,10 +136,10 @@ class Blackjack extends React.Component{
                 }
                 else{
                   if (card.suit == 'D' || card.suit == 'H'){
-                    return <div className="cardFormatDH" key={ index }> {card.rankKey}{card.suit} </div>;
+                    return <div className="cardFormatDH" key={ index }> {card.rank}{card.suit} </div>;
                   }
                   else if (card.suit == 'C' || card.suit == 'S'){
-                    return <div className="cardFormatCS" key={ index }> {card.rankKey}{card.suit} </div>;
+                    return <div className="cardFormatCS" key={ index }> {card.rank}{card.suit} </div>;
                   }
                 }
               }, this)}
